@@ -12,5 +12,6 @@ urlpatterns = [
 
 # View set
 router = DefaultRouter()
-router.register('profession', ProfessionViewSet)
+router.register(r'profession', ProfessionViewSet)
+router.register(r'singer', SingerViewSet)
 urlpatterns += router.urls

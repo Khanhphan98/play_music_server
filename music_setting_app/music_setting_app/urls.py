@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include('music.urls'))
+    path("api/", include('music.urls')),
+    path("api/token", jwt_views.TokenObtainPairView.as_view())
 ]
