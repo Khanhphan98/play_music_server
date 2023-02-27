@@ -14,4 +14,7 @@ urlpatterns = [
 router = DefaultRouter()
 router.register(r'profession', ProfessionViewSet)
 router.register(r'singer', SingerViewSet)
+router.register(r'category', CategoryViewSet)
+router.register(r'country', CountryViewSet)
+router.register(r'Song', SongViewSet)
 urlpatterns += router.urls
