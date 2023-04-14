@@ -1,4 +1,5 @@
 from django.db import models
+from .until import upload_avatar_path
 
 
 # Create your models here.
@@ -17,7 +18,7 @@ class Singer(models.Model):
     address = models.CharField(max_length=100)
     professions = models.ManyToManyField(Profession, related_name='singers', blank=True)
     description = models.TextField(null=True)
-    avatar = models.ImageField(null=True)
+    avatar = models.ImageField(blank=True, default="", upload_to=upload_avatar_path, null=True)
 
     def __str__(self):
         return self.name

@@ -14,6 +14,12 @@ class SingerSerializer(ModelSerializer):
         model = Singer
         fields = '__all__'
 
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        if instance.avatar:
+            ret['avatar'] = '/api' + instance.avatar.url
+        return ret
+
 
 class CategorySerializer(ModelSerializer):
     class Meta:
