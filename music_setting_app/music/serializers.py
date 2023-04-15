@@ -16,6 +16,8 @@ class SingerSerializer(ModelSerializer):
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
+        professions = instance.professions.all()
+        ret['professions'] = [{'id': profession.id, 'name': profession.name} for profession in professions]
         if instance.avatar:
             ret['avatar'] = '/api' + instance.avatar.url
         return ret
