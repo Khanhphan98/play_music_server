@@ -18,8 +18,6 @@ class SingerSerializer(ModelSerializer):
         ret = super().to_representation(instance)
         professions = instance.professions.all()
         ret['professions'] = [{'id': profession.id, 'name': profession.name} for profession in professions]
-        if instance.avatar:
-            ret['avatar'] = '/api' + instance.avatar.url
         return ret
 
 
@@ -38,4 +36,24 @@ class CountrySerializer(ModelSerializer):
 class SongSerializer(ModelSerializer):
     class Meta:
         model = Song
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        # Query category
+        categories = instance.categories.all()
+        ret['categories'] = [{'id': category.id, 'name': category.name} for category in categories]
+        # Query Country
+        countries = instance.countries.all()
+        ret['countries'] = [{'id': country.id, 'name': country.name} for country in countries]
+        # Query Singer
+        singers = instance.singers.all()
+        ret['singers'] = [{'id': singer.id, 'name': singer.name} for singer in singers]
+
+        return ret
+
+
+class MediaSerializer(ModelSerializer):
+    class Meta:
+        model = Media
         fields = '__all__'

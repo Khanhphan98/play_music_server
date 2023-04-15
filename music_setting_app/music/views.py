@@ -1,7 +1,6 @@
 from rest_framework import viewsets
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.parsers import MultiPartParser, FormParser
 
 
 # Create your views here.
@@ -15,7 +14,7 @@ class SingerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = SingerSerializer
     queryset = Singer.objects.all()
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -34,3 +33,9 @@ class SongViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = SongSerializer
     queryset = Song.objects.all()
+
+
+class MediaViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = MediaSerializer
+    queryset = Media.objects.all()
