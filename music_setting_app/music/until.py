@@ -1,11 +1,11 @@
 import os.path
-
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes, api_view
 from mutagen.mp3 import MP3
+from rest_framework.permissions import IsAuthenticated
+from django.conf import settings
 
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 ALLOWED_EXTENSIONS = ['.jpeg', '.jpg', 'png', '.gif']
@@ -45,7 +45,7 @@ def upload_file_mp3(instance, files):
 
 
 @csrf_exempt
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def upload_file(request):
     if request.method == 'POST' and request.FILES['file']:
         response = None
@@ -65,3 +65,24 @@ def upload_file(request):
             return JsonResponse({'error': 'Unsupported file type.'}, status=400)
 
     return JsonResponse({'error': 'Bad request'}, status=400)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def delete_file(request):
+    try:
+        # init value
+        file_path = request.data['path']
+        path_root = os.path.join(settings.MEDIA_ROOT)
+
+        # Kiểm tra xem file có tồn tại không
+        if os.path.exists(f'{path_root}{file_path}'):
+            # Delet file
+            os.remove(f'{path_root}{file_path}')
+            # Return
+            return JsonResponse({"sucess": "Deleted file " + file_path}, status=200)
+        # Return
+        return JsonResponse({'error': 'Not found path file'}, status=400)
+    except Exception as e:
+        # Return
+        return JsonResponse({'sucess': False, 'error': str(e)})
