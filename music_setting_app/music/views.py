@@ -33,9 +33,3 @@ class SongViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = SongSerializer
     queryset = Song.objects.all()
-
-
-class MediaViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    serializer_class = MediaSerializer
-    queryset = Media.objects.all()

@@ -1,6 +1,4 @@
 from django.db import models
-from .until import upload_file_path
-from django.conf import settings
 
 
 # Create your models here.
@@ -46,18 +44,12 @@ class Song(models.Model):
     name = models.CharField(max_length=250)
     release = models.DateField()
     time = models.IntegerField()
-    lyric = models.TextField()
-    description = models.TextField()
+    lyric = models.TextField(null=True)
+    description = models.TextField(null=True)
     file_mp3 = models.CharField(max_length=250)
     categories = models.ManyToManyField(Category, blank=True)
     countries = models.ManyToManyField(Country, blank=True)
     singers = models.ManyToManyField(Singer, blank=True)
+    picture = models.CharField(max_length=250, null=True, default='')
 
-
-class Media(models.Model):
-    file = models.FileField(upload_to=upload_file_path, blank=True, default="", null=True)
-    created_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.file.name
 
