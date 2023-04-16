@@ -29,7 +29,7 @@ def upload_file_image(files):
     }
 
 
-def upload_file_mp3(instance, files):
+def upload_file_mp3(files):
     fs = FileSystemStorage('media/songs')
     filename = fs.save(files.name, files)
     uploaded_file_url = f'/api/{fs.base_location}/{filename}'
