@@ -50,6 +50,6 @@ class Song(models.Model):
     categories = models.ManyToManyField(Category, blank=True)
     countries = models.ManyToManyField(Country, blank=True)
     singers = models.ManyToManyField(Singer, blank=True)
-    picture = models.CharField(max_length=250, null=True, default='')
+    picture = models.CharField(max_length=250)
 
 

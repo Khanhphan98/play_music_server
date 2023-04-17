@@ -20,5 +20,6 @@ router.register(r'singer', SingerViewSet)
 router.register(r'category', CategoryViewSet)
 router.register(r'country', CountryViewSet)
 router.register(r'song', SongViewSet)
+router.register(r'user', UserViewSet)
 
 urlpatterns += router.urls
