@@ -5,12 +5,15 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf.urls.static import static
 from django.conf import settings
 from .until import upload_file, delete_file
+from .service import *
 
 urlpatterns = [
                   path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
                   path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
                   path('upload_file/', upload_file, name='file'),
-                  path('delete_file/', delete_file)
+                  path('delete_file/', delete_file),
+                  path('song/recent/', get_list_song),
+                  path('singer/recent/', get_list_singer),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # View set

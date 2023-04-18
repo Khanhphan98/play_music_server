@@ -14,7 +14,6 @@ class SingerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = SingerSerializer
     queryset = Singer.objects.all()
-    # parser_classes = [MultiPartParser, FormParser]
 
 
 class CategoryViewSet(viewsets.ModelViewSet):

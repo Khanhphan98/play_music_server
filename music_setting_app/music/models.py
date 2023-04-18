@@ -51,5 +51,7 @@ class Song(models.Model):
     countries = models.ManyToManyField(Country, blank=True)
     singers = models.ManyToManyField(Singer, blank=True)
     picture = models.CharField(max_length=250)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
