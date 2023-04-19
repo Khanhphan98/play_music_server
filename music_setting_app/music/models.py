@@ -49,7 +49,7 @@ class Song(models.Model):
     file_mp3 = models.CharField(max_length=250)
     categories = models.ManyToManyField(Category, blank=True)
     countries = models.ManyToManyField(Country, blank=True)
-    singers = models.ManyToManyField(Singer, blank=True)
+    singers = models.ManyToManyField(Singer, blank=True, related_name='singer')
     picture = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
