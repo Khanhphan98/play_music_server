@@ -10,6 +10,12 @@ class ProfessionSerializer(ModelSerializer):
         # exclude = ['name']
 
 
+class StatistikSerializer(ModelSerializer):
+    class Meta:
+        model = Statistik
+        fields = '__all__'
+
+
 class SingerSerializer(ModelSerializer):
     class Meta:
         model = Singer
