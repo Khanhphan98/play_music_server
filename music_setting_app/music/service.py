@@ -99,17 +99,22 @@ def get_list_song_by_country(request):
         country_ids = json.loads(request.body)['country_ids']
         # Get Song
         songs_in_country = Song.objects.filter(countries__id__in=country_ids)
+        # Return
+        return JsonResponse({'data': list(songs_in_country.values())}, status=200)
+    except Exception as e:
+        # Return
+        return JsonResponse({'sucess': False, 'error': str(e)})
+
+
+@csrf_exempt
+def get_list_song_by_exclude_country(request):
+    try:
+        # GET id country by song
+        country_ids = json.loads(request.body)['country_ids']
         # Lay ra cac bai hat tru hai bai hat o hai quoc gia nay
         songs_exclude_country = Song.objects.exclude(countries__id__in=country_ids)
-
-        data = {
-            'songs_in_country': list(songs_in_country.values()),
-            'songs_exclude_country': list(songs_exclude_country.values())
-        }
-
         # Return
-        return JsonResponse({'data': data}, status=200)
-        # return JsonResponse({'data': list(data.values())}, status=200)
+        return JsonResponse({'data': list(songs_exclude_country.values())}, status=200)
     except Exception as e:
         # Return
         return JsonResponse({'sucess': False, 'error': str(e)})
