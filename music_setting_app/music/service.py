@@ -2,28 +2,13 @@ import json
 from .models import Song, Singer
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import F, Count
+from django.db.models import F
 
 
-@csrf_exempt
-def get_list_song(request):
+def convertDataSong(data):
     try:
-        # GET id singer
-        song_id = json.loads(request.body)['id']
-        if song_id:
-            # Sắp xếp các bản ghi theo thời gian tạo
-            list_recent = Song.objects.filter(id=song_id).order_by('-created_at') \
-                .prefetch_related('categories', 'countries', 'singers') \
-                .annotate(song_play_count=F('statistik__song_play_count'), statistikID=F('statistik__id'))
-        else:
-            # Sắp xếp các bản ghi theo thời gian tạo
-            list_recent = Song.objects.all().order_by('-created_at') \
-                .prefetch_related('categories', 'countries', 'singers') \
-                .annotate(song_play_count=F('statistik__song_play_count'), statistikID=F('statistik__id'))
-
-
         songs = []
-        for song in list_recent:
+        for song in data:
             song_dict = {
                 'id': song.id,
                 'name': song.name,
@@ -44,6 +29,31 @@ def get_list_song(request):
                 },
             }
             songs.append(song_dict)
+
+        # Return
+        return songs
+    except Exception as e:
+        # Return
+        return JsonResponse({'sucess': False, 'error': str(e)})
+
+
+@csrf_exempt
+def get_list_song(request):
+    try:
+        # GET id singer
+        song_id = json.loads(request.body)['id']
+        if song_id:
+            # Sắp xếp các bản ghi theo thời gian tạo
+            list_recent = Song.objects.filter(id=song_id).order_by('-created_at') \
+                .prefetch_related('categories', 'countries', 'singers') \
+                .annotate(song_play_count=F('statistik__song_play_count'), statistikID=F('statistik__id'))
+        else:
+            # Sắp xếp các bản ghi theo thời gian tạo
+            list_recent = Song.objects.all().order_by('-created_at') \
+                .prefetch_related('categories', 'countries', 'singers') \
+                .annotate(song_play_count=F('statistik__song_play_count'), statistikID=F('statistik__id'))
+
+        songs = convertDataSong(list_recent)
 
         # Return
         return JsonResponse({'data': songs}, status=200)
@@ -98,9 +108,13 @@ def get_list_song_by_country(request):
         # GET id country by song
         country_ids = json.loads(request.body)['country_ids']
         # Get Song
-        songs_in_country = Song.objects.filter(countries__id__in=country_ids)
+        songs_in_country = Song.objects.filter(countries__id__in=country_ids) \
+            .annotate(song_play_count=F('statistik__song_play_count'), statistikID=F('statistik__id'))
+
+        data = convertDataSong(songs_in_country)
+
         # Return
-        return JsonResponse({'data': list(songs_in_country.values())}, status=200)
+        return JsonResponse({'data': data}, status=200)
     except Exception as e:
         # Return
         return JsonResponse({'sucess': False, 'error': str(e)})
@@ -112,9 +126,13 @@ def get_list_song_by_exclude_country(request):
         # GET id country by song
         country_ids = json.loads(request.body)['country_ids']
         # Lay ra cac bai hat tru hai bai hat o hai quoc gia nay
-        songs_exclude_country = Song.objects.exclude(countries__id__in=country_ids)
+        songs_exclude_country = Song.objects.exclude(countries__id__in=country_ids) \
+            .annotate(song_play_count=F('statistik__song_play_count'), statistikID=F('statistik__id'))
+
+        data = convertDataSong(songs_exclude_country)
+
         # Return
-        return JsonResponse({'data': list(songs_exclude_country.values())}, status=200)
+        return JsonResponse({'data': data}, status=200)
     except Exception as e:
         # Return
         return JsonResponse({'sucess': False, 'error': str(e)})
