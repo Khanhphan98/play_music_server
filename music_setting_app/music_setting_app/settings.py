@@ -9,13 +9,20 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os.path
 from pathlib import Path
 from datetime import timedelta
+# from music_setting_app.music_setting_app.urls import urlpatterns
 
 import pymysql
 
 pymysql.install_as_MySQLdb()
+pymysql.version_info = (1, 4, 6, 'final', 0)
+
+# from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+# below line have to the last line of the file
+# urlpatterns += staticfiles_urlpatterns()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -126,7 +133,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+# STATIC_ROOT = BASE_DIR / 'static'
+
 STATIC_URL = "static/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -142,5 +155,5 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1)      # đặt thời gian hết hạn token
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1)  # đặt thời gian hết hạn token
 }

@@ -11,19 +11,19 @@ class ProfessionViewSet(viewsets.ModelViewSet):
 
 
 class SingerViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = SingerSerializer
     queryset = Singer.objects.all()
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
 
 class CountryViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = CountrySerializer
     queryset = Country.objects.all()
 
@@ -32,3 +32,14 @@ class SongViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     serializer_class = SongSerializer
     queryset = Song.objects.all()
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class StatistikViewSet(viewsets.ModelViewSet):
+    serializer_class = StatistikSerializer
+    queryset = Statistik.objects.all()
