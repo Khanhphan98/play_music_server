@@ -54,7 +54,7 @@ def upload_file(request):
         if files.size > MAX_FILE_SIZE:
             raise ValueError("File size is to large.")
 
-        if files.name.endswith('.mp3'):
+        if files.name.endswith(('.mp3', '.wav', '.acc', '.flac', '.ogg', '.wma', '.aiff', '.alac')):
             response = upload_file_mp3(files)
         elif is_allowed_file(files.name):
             response = upload_file_image(files)
