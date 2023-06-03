@@ -176,3 +176,31 @@ def get_song_with_statistik(request):
 
     # Return
     return JsonResponse({'data': songs}, status=200)
+
+
+@csrf_exempt
+def get_list_songs_by_singer(request, singer_id):
+    try:
+        # GET id country by song
+        # Lay ra cac bai hat tru hai bai hat o hai quoc gia nay
+        songs_by_singer = Song.objects.filter(singers__id__in=singer_id) \
+            .annotate(song_play_count=F('statistik__song_play_count'), statistikID=F('statistik__id'))
+
+        songs = convertDataSong(songs_by_singer)
+
+        singer = Singer.objects.get(id=singer_id)
+
+        singer_data = {
+            'id': singer.id,
+            'name': singer.name,
+            'birthday': singer.birthday.strftime('%Y-%m-%d'),
+            'address': singer.address,
+            'description': singer.description,
+            'avatar': singer.avatar,
+        }
+
+        # Return
+        return JsonResponse({'data': { 'songs': songs, 'singer': singer_data }}, status=200)
+    except Exception as e:
+        # Return
+        return JsonResponse({'sucess': False, 'error': str(e)})

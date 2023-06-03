@@ -18,6 +18,7 @@ urlpatterns = [
   path('song/exclude-country/', get_list_song_by_exclude_country),
   # Singer
   path('singer/recent/', get_list_singer),
+  path('singer/by_singer/<singer_id>', get_list_songs_by_singer),
   # Statistik
   path('statistik/singer/', get_singer_with_statistik),
   path('statistik/song/', get_song_with_statistik),
