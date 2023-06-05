@@ -183,7 +183,7 @@ def get_list_songs_by_singer(request, singer_id):
     try:
         # GET id country by song
         # Lay ra cac bai hat tru hai bai hat o hai quoc gia nay
-        songs_by_singer = Song.objects.filter(singers__id__in=singer_id) \
+        songs_by_singer = Song.objects.filter(singers__id=singer_id) \
             .annotate(song_play_count=F('statistik__song_play_count'), statistikID=F('statistik__id'))
 
         songs = convertDataSong(songs_by_singer)
