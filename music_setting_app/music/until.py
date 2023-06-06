@@ -7,7 +7,7 @@ from mutagen.mp3 import MP3
 from rest_framework.permissions import IsAuthenticated
 from django.conf import settings
 
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+MAX_FILE_SIZE = 100 * 1024 * 1024  # 100MB
 ALLOWED_EXTENSIONS = ['.jpeg', '.jpg', 'png', '.gif']
 
 
